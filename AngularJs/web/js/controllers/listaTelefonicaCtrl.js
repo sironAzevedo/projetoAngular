@@ -1,8 +1,8 @@
 //angular.module("listaTelefonica").controller("listaTelefonicaCtrl", function($scope) - sem AJAX
-		modulo.controller("listaTelefonicaCtrl", function($scope, contatosAPI, operadorasAPI){ //com AJAX
+		modulo.controller("listaTelefonicaCtrl", function($scope, contatosAPI, operadorasAPI, serialGenerator){ //com AJAX
 			$scope.titulo = "Lista Telefônica"; 
-                        /*
-			$scope.operadoras = [
+
+			/*$scope.operadoras = [
 				{nome: "Oi", codigo: "31", categoria: "Celular",  preco: 2},
 				{nome: "Vivo", codigo: "15", categoria: "Celular",  preco: 1},
 				{nome: "Tim", codigo: "41", categoria: "Celular",  preco: 3},
@@ -46,15 +46,15 @@
 				});
 			}; 
 
-			$scope.adicionarContato = function (contato) {
-                                contato.serial = serialGenerator.generate();
-                                contato.data = new Date();
-                                contatosAPI.saveContato(contato).success(function (data) {
-                                    delete $scope.contato;
-                                    $scope.contatoForm.$setPristine();
-                                    carregarContatos();
-                                });
-                        };
+			$scope.adicionarContato = function (contato) {				
+				contato.serial = serialGenerator.generate();
+				contato.data = new Date();
+				contatosAPI.saveContato(contato).success(function (data) {
+					delete $scope.contato;
+					$scope.contatoForm.$setPristine();
+					carregarContatos();
+				});
+			};
 
 			$scope.apagarContatos = function(contatos){
 				$scope.contatos = contatos.filter(function(contato){

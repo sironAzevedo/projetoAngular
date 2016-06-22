@@ -1,3 +1,3 @@
-modulo.value("config",{
-	baseUrl: "http://localhost:3412"
+modulo.constant("config",{
+	baseUrl: "http://192.168.71.46:3412"
 });
