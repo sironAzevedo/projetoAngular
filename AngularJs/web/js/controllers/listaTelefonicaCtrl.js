@@ -34,7 +34,7 @@
 				contatosAPI.getContatos().success(function(data, status){
 					$scope.contatos = data;
 				}).error(function(data, status){
-					$scope.message = "Aconteceu um problema: " + data;
+					$scope.error = "Não foi possível carregar os dados!";
 				});
 			};
 
@@ -42,7 +42,7 @@
 				operadorasAPI.getOperadoras().success(function(data, status){
 					$scope.operadoras = data;
 				}).error(function(data, status){
-					$scope.message = "Aconteceu um problema: " + data;
+					$scope.message = "Aconteceu um problema!";
 				});
 			}; 
 
