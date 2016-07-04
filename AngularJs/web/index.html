@@ -20,24 +20,26 @@
         <script src="js/filters/nameFilter.js"></script>
         <script src="js/filters/ellipsisFilte.js"></script>
         <script src="js/derectives/uiAlertDirective.js"></script>
+        <script src="js/derectives/uiDateDirective.js"></script>
+        <script src="js/derectives/uiTelefoneDirective.js"></script>
 
     </head>
     <body ng-controller="listaTelefonicaCtrl">
         <div class="jumbotron">
             <h3 class="titulo">{{titulo}}</h3>
-            
-            <div ui-alert> </div>
-            
-            <div class="ui-alert">
-                <div class="ui-alert-title">
-                    Ops, aconteceu um problema!
-                </div>
 
-                <div class="ui-alert-message">
-                    {{error}}
-                </div>
+            <ui-alert title="Ops, aconteceu um problema!"> <!-- message="error"-->
+                {{error}}
+                <!--este erro é passado por parametro que fica dentro da classe listaTelefonicaCtrl.js no metodo carregarContatos linha 39-->
+            </ui-alert> 
+            <!-- O ui-alert é uma diretiva que estar na classe uiAlertDirective.js, que serve para emitir um alerta de erro por paramentro-->
+            
+            <input type="text" class="form-control" ng-model="criterioDeBusca" placeholder="Buscar" typeahead-loading="loadingLocations" typeahead-no-results="noResults"/> 
+            <i ng-show="loadingLocations" class="glyphicon glyphicon-refresh"></i>
+            <div ng-show="noResults">
+                <i class="glyphicon glyphicon-remove"></i> No Results Found
             </div>
-            <input class="form-control" type="text" ng-model="criterioDeBusca" placeholder="Buscar" />
+
             <table ng-show="contatos.length > 0" class="table">
                 <tr>
                     <th></th>
@@ -54,7 +56,7 @@
                     <td>{{contato.nome| name | ellipsis:20}}</td> <!--o name é o nome dado a um filtro q foi criado para formatar o nome-->
                     <td>{{contato.telefone}}</td>
                     <td>{{contato.operadora.nome| lowercase}}</td> <!-- o lowercase té um filtro que transforma a String em letra minuscula -->
-                    <td>{{contato.data| date:'dd/MM/yyyy HH:mm'}}</td> 
+                    <td>{{contato.data| date:'dd/MM/yyyy'}}</td> 
                 </tr>
             </table>
             <hr/> 
@@ -62,9 +64,11 @@
             <!--formulario-->
             <form name="contatoForm">
                 <input class="form-control" type="text" ng-model="contato.nome" name="nome" placeholder="Nome" ng-required="true" ng-minlength="4" />
-                <input class="form-control" type="text" ng-model="contato.telefone" name="telefone" placeholder="Telefone" ng-required="true" ng-pattern="/^\d{4,5}-\d{4}$/"/>
+                <input class="form-control" type="text" ng-model="contato.telefone" name="telefone" placeholder="Telefone" ng-required="true" ui-telefone/>
+                <!--                <input class="form-control" type="text" ng-model="contato.telefone" name="telefone" placeholder="Telefone" ng-required="true" ng-pattern="/^\d{4,5}-\d{4}$/"/>-->
+                <input class="form-control" type="text" ng-model="contato.data" name="data" placeholder="Data" ui-date/>
 
-                <select class="form-control" ng-model="contato.operadora" ng-options="operadora.nome +    '( ' +    (operadora.preco |    currency) +    ' )' group by operadora.categoria for operadora in operadoras| orderBy:'nome'">
+                <select class="form-control" ng-model="contato.operadora" ng-options="operadora.nome +      '( ' +      (operadora.preco |      currency) +      ' )' group by operadora.categoria for operadora in operadoras| orderBy:'nome'">
                     <option value="">Selecione uma operadora</option>			
                 </select>
             </form>
@@ -84,7 +88,7 @@
                     Por favor, preencha o campo telefone!
                 </div>
 
-                <div ng-show="contatoForm.telefone.$error.pattern" class="alert alert-danger">
+                <div ng-show="contatoForm.telefone.$error.ui - telefone" class="alert alert-danger">
                     O campo telefone deve ter o formato DDDD-DDDD
                 </div>
             </div>

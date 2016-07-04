@@ -2,6 +2,8 @@
 		modulo.controller("listaTelefonicaCtrl", function($scope, contatosAPI, operadorasAPI, serialGenerator){ //com AJAX
 			$scope.titulo = "Lista Telefônica"; 
 
+                        //para adicionar uma lista sem o back-end AJAX
+                        //Descomenta a linha 7 e a linha 28 e comenta a linha 32 até a linha 59 e as linha 78 e 79
 			/*$scope.operadoras = [
 				{nome: "Oi", codigo: "31", categoria: "Celular",  preco: 2},
 				{nome: "Vivo", codigo: "15", categoria: "Celular",  preco: 1},
