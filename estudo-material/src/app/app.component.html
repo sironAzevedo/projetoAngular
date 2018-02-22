@@ -1,0 +1,82 @@
+<mat-card-content>
+  <mat-tab-group class="demo-tab-group">
+
+    <mat-tab id="tab1">
+      <ng-template mat-tab-label>
+        <mat-icon>playlist_add</mat-icon> Add Cliente
+      </ng-template>
+      <div class="fields">
+        <div class="row">
+          <form [formGroup]="assetDepositForm">
+
+            <mat-input-container>
+              <input matInput (keyup)="verifyAddClient($event)" type="text" id="nomeCliente" placeholder="Nome" formControlName="nomeCliente"
+                maxlength="50">
+            </mat-input-container>
+
+            <mat-input-container>
+              <input matInput (keyup)="verifyAddClient($event)" type="text" mdInput type="text" id="emailCliente" placeholder="Email" formControlName="emailCliente">
+            </mat-input-container>
+
+            <mat-select (change)="verifyAddClient($event)" formControlName="sexoCliente" placeholder="Sexo" class="--small">
+              <mat-option *ngFor="let sexoCliente of opcoes" [value]="sexoCliente.name">{{sexoCliente.name }}</mat-option>
+            </mat-select>
+
+            <!-- <mat-select (change)="hasWordInPalavras($event)" formControlName="sexoCliente" placeholder="Sexo">
+            <mat-option *ngFor="let sexoCliente of opcoes" [value]="sexoCliente.name">{{sexoCliente.name }}</mat-option>
+          </mat-select> -->
+
+            <button type="button" mat-raised-button color="primary" [disabled]="!canAdd" (click)="add()">
+              <mat-icon>add</mat-icon>
+            </button>
+          </form>
+        </div>
+      </div>
+    </mat-tab>
+
+    <mat-tab id="tab2" [disabled]="!clientes.length > 0">
+      <ng-template mat-tab-label>
+        <mat-icon>view_list</mat-icon> Lista de Clientes
+      </ng-template>
+      <button mat-icon-button [matMenuTriggerFor]="menu">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu" yPosition="above">
+        <button mat-raised-button color="accent" [disabled]="!clientes.length > 0" (click)="clear()">
+          <mat-icon>delete_sweep</mat-icon>
+          <span>Limpar</span>
+        </button>
+      </mat-menu>
+
+      <div class="simple-list-content">
+        <mat-card *ngFor="let cliente of clientes;">
+          <span matTooltip="{{ cliente.nomeCliente }}" matTooltipPosition="above" [innerHTML]="cliente.nomeCliente | textLength:'10'"></span>
+          <span matTooltip="{{ cliente.emailCliente }}" matTooltipPosition="above" [innerHTML]="cliente.emailCliente | textLength:'10'"></span>
+          <span [innerHTML]="cliente.sexoCliente"></span>
+          <a (click)="deleteItem(cliente.emailCliente)">
+            <mat-icon>delete</mat-icon>
+          </a>
+        </mat-card>
+        <div class="message" *ngIf="!(clientes.length > 0)"> Adicione pelo menos um cliente.</div>
+      </div>
+
+      <!-- <div class="simple-list-content">
+        <table>
+          <tr *ngFor="let cliente of clientes;">
+            <td matTooltip="{{ cliente.nomeCliente }}" matTooltipPosition="above">{{cliente.nomeCliente}}</td>
+            <td matTooltip="{{ cliente.emailCliente }}" matTooltipPosition="above">{{cliente.emailCliente}}</td>
+            <td>{{cliente.sexoCliente}}</td>
+            <td>
+              <button (click)="deleteItem(cliente.emailCliente)">Delete</button>
+            </td>
+          </tr>
+        </table>
+      </div> -->
+
+      <!-- <mat-list *ngFor="let palavra of palavras">
+        <mat-list-item>{{ palavra }}</mat-list-item>
+        <mat-divider></mat-divider>
+      </mat-list> -->
+    </mat-tab>
+  </mat-tab-group>
+</mat-card-content>
